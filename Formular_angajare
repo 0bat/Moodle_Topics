@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+<div ng-app="myApp" ng-controller="formCtrl" ng-init="afiseaza=false;salariu='';"> 
+ <form>
+ <h2 style="text-align:center;"> Formularul angajării </h2>
+ <p> Nume : <input type="text" ng-model="nume"></p>
+ <p> Prenume : <input type="text" ng-model="prenume"></p>
+ <p> Data nașterii : <input type="date" ng-model="ziua_nastere"></p>
+ Facultatea :
+ <br/>
+ <br/>
+ <input type="radio" value="chimie" ng-model="facultate"> Chimie <br/>
+ <input type="radio" value="informatica" ng-model="facultate"> Informatica <br/>
+ <input type="radio" value="matematica" ng-model="facultate"> Matematica <br/>
+ <input type="radio" value="biologie" ng-model="facultate"> Biologie <br/>
+ <br/>
+ <br/>
+ Obiectul predării : 
+ <select ng-model="object">
+   <option value=""> --Selectează obiectul--
+    <option value="chimie"> Chimie organică
+    <option value="informatica"> Tehnici avansate de programare 
+    <option value="matematica"> Calculul integral
+    <option value="biologie"> Biologie celulară
+  </select>
+ <br/>
+ <br/>
+ Salariu aștepat : 
+ <input type="number" ng-model="salariu"> MDL <br/>
+ <p ng-show="salariu > 0 && salariu < 3000"> Vă subestimați !!! </p>
+ <p ng-show="salariu > 5000 && salariu > 0 "> EXAGERAT !!! </p>
+ <br/><br/>
+ <button ng-disabled = "(salariu < 3000 || salariu > 5000) || (!nume || !prenume || !ziua_nastere || !facultate || !object)" ng-click="confirma()">CONFIRMA</button>
+ <button ng-click="anuleaza()">ANULEAZA</button>
+</form>
+ 
+<div ng-show = "afiseaza">
+<hr>
+<h2 style="text-align:center;"> Informatie Anagajat </h2>
+<p> Nume : {{nume}}</p>
+<p> Prenume :{{prenume}}</p>
+<p> Data nașterii : {{ziua_nastere | date : "longDate"}}</p>
+<p> Facultatea :{{facultate}}</p>
+<p> Obiectul Predarii :{{object}}</p>
+<p> Salariul Dorit :{{salariu}}</p>
+
+</div>
+<script>
+var app = angular.module('myApp', []);
+app.controller('formCtrl', function($scope) {
+    $scope.confirma = function () {
+        $scope.afiseaza  = true;
+    };
+    $scope.anuleaza = function () {
+     $scope.nume = "";
+        $scope.prenume = "";
+        $scope.ziua_nastere = "";
+        $scope.facultate = "";
+        $scope.object = "";
+        $scope.salariu = '';
+        $scope.afiseaza = false;
+    };
+       
+});
+</script>
+</div>
